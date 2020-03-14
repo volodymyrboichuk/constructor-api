@@ -24,7 +24,6 @@ module.exports =  {
         });
 
         customer.save((err) => {
-            console.log
             if (err) {
                 return next(err);
             }
