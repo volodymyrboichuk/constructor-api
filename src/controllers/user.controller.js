@@ -1,19 +1,16 @@
 const User = require('../models/users.model');
-const {abstractActionResult} = require('./controller.utils');
+const {abstractActionResult, voidAbstractActionResult} = require('./controller.utils');
 //Simple version, without validation or sanitation
 module.exports =  {
-    getAll(req, res) {
-        User.find({}, function (err, docs) {
-            res.send(abstractActionResult(docs, err));
-
+    getUser(req, res) {
+        console.log(req.body)
+        User.findOne({login: req.body.login, password: req.body.password}, function (err, user) {
+            console.log(err)
+            console.log(user)
+            res.send(abstractActionResult(user, err));
         })
     },
-    getById(req, res) {
-        User.findById(req.params.id, function (err, product) {
-            res.send(abstractActionResult(product, err));
-        })
-    },
-    create(req, res, next) {
+    create(req, res) {
         const user = new User({
             _id: req.body._id,
             login: req.body.login,
@@ -24,11 +21,7 @@ module.exports =  {
         });
 
         user.save((err) => {
-            console.log
-            if (err) {
-                return next(err);
-            }
-            res.send(user)
+            res.send(voidAbstractActionResult(err));
         })
     },
     update(req, res) {

@@ -4,33 +4,23 @@ const Category = require('../models/category.model');
 module.exports =  {
     getAll(req, res) {
         Category.find({}, function (err, docs) {
-            if (err) return next(err);
-            res.send(docs);
+            res.send(abstractActionResult(docs, err));
         })
     },
     getById(req, res) {
-        Category.findById(req.params.id, function (err, product) {
-            if (err) return next(err);
-            res.send(product);
+        Category.findById(req.params.id, function (err, docs) {
+            res.send(abstractActionResult(docs, err));
         })
     },
     create(req, res, next) {
-        console.log(req.body.name)
         const category = new Category({
             _id: req.body._id,
             name: req.body.name
         });
 
         category.save((err) => {
-            console.log
-            if (err) {
-                res.send('ERRORRR')
-                return next(err);
-            }
-            res.send('Product Created successfully')
+            res.send(voidAbstractActionResult(err));
         })
-        console.log(Category)
-        //res.send('Greetings from the Test controller!');
     },
     update(req, res) {
         console.log(Category)

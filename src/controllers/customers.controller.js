@@ -1,21 +1,19 @@
+const {abstractActionResult, voidAbstractActionResult} = require('./controller.utils');
 const Customer = require('../models/customers.model');
 
 //Simple version, without validation or sanitation
 module.exports =  {
-    getAll(req, res) {
+    getAllCustomers(req, res) {
         Customer.find({}, function (err, docs) {
-            if (err) return next(err);
-            res.send(docs);
+            res.send(abstractActionResult(docs, err));
         })
     },
-    getById(req, res) {
-        Customer.findById(req.params.id, function (err, product) {
-            if (err) return next(err);
-            res.send(product);
+    getCustomerById(req, res) {
+        Customer.findById(req.params.id, function (err, docs) {
+            res.send(abstractActionResult(docs, err));
         })
     },
-    create(req, res, next) {
-        console.log(req.body.name)
+    createCustomer(req, res) {
         const customer = new Customer({
             _id: req.body._id,
             name: req.body.name,
@@ -24,17 +22,13 @@ module.exports =  {
         });
 
         customer.save((err) => {
-            if (err) {
-                return next(err);
-            }
-            res.send('Product Created successfully')
+            res.send(voidAbstractActionResult(err));
         })
-        //res.send('Greetings from the Test controller!');
     },
-    update(req, res) {
+    updateCustomer(req, res) {
         res.send('Greetings from the Test controller!');
     },
-    delete(req, res) {
+    deleteCustomer(req, res) {
         res.send('Greetings from the Test controller!');
     }
 }

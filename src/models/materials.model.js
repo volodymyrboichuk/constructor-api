@@ -2,10 +2,10 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const MaterialsSchema = new Schema({
-    _id: {type: mongoose.Types.ObjectId, required: true},
+    _id: {type: String, required: true},
     name: {type: String, required: true, max: 100},
     price: {type: Number, required: true},
-    categoryId: {type: mongoose.Types.ObjectId, required: true}
+    categoryId: {type: String, required: true}
 });
 
 // Export the model
