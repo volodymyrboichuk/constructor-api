@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const path = require('path');
 require('dotenv').config({path: __dirname + '/.env'});
 const category = require('./src/routes/category.route');
 const users = require('./src/routes/user.route');
@@ -8,6 +9,12 @@ const {connectToDb} = require('./src/mongo.connection');
 
 const app = express();
 const db = connectToDb();
+
+
+app.use('/', function(req, res) {
+    console.log(__dirname)
+    res.sendFile(path.join(__dirname + '/public/index.html'));
+});
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
@@ -22,7 +29,7 @@ app.use('/category', category);
 app.use('/users', users);
 app.use('/customers', customers);
 
-let port = 1234;
+let port = 1235;
 app.listen(port, () => {
     console.log('Server is up and running on port numner ' + port);
 });
