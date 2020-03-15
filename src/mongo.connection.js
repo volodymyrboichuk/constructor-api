@@ -6,7 +6,11 @@ const dbName = process.env.DB_NAME;
 const DB_URL = `mongodb://${dbUser}:${dbPassword}@ds123963.mlab.com:23963/${dbName}`;
 
 const connectToDb = () => {
-    mongoose.connect(DB_URL);
+    mongoose.connect(DB_URL, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        serverSelectionTimeoutMS: 5000
+    }).catch(err => console.log(err.reason));;
     mongoose.Promise = global.Promise;
     
     const db = mongoose.connection;
