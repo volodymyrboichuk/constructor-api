@@ -11,9 +11,9 @@ const app = express();
 const db = connectToDb();
 
 
-app.use('/', function(req, res) {
+app.get('/', function(req, res) {
     console.log(__dirname)
-    res.sendFile(path.join(__dirname + '/build/index.html'));
+    res.sendFile(path.join(__dirname + '/public/index.html'));
 });
 
 app.use(bodyParser.json());
