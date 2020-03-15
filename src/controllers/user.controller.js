@@ -1,17 +1,16 @@
 const User = require('../models/users.model');
-
+const {abstractActionResult} = require('./controller.utils');
 //Simple version, without validation or sanitation
 module.exports =  {
     getAll(req, res) {
         User.find({}, function (err, docs) {
-            if (err) return next(err);
-            res.send(docs);
+            res.send(abstractActionResult(docs, err));
+
         })
     },
     getById(req, res) {
         User.findById(req.params.id, function (err, product) {
-            if (err) return next(err);
-            res.send(product);
+            res.send(abstractActionResult(product, err));
         })
     },
     create(req, res, next) {
