@@ -29,7 +29,7 @@ app.use('/category', category);
 app.use('/users', users);
 app.use('/customers', customers);
 
-let port = 1235;
+let port = process.env.PORT || 1234;
 app.listen(port, () => {
     console.log('Server is up and running on port numner ' + port);
 });
